@@ -10,7 +10,8 @@ const SplashScreen: FC = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      resetAndNavigate('LoginScreen');
+      // resetAndNavigate('LoginScreen');
+      resetAndNavigate('AnimatedTabs');
     }, 3000);
 
     return () => clearTimeout(timeoutId);
@@ -43,4 +44,3 @@ const SplashScreen: FC = () => {
 export default SplashScreen;
 
 const styles = StyleSheet.create({});
-

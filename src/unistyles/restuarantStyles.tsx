@@ -171,9 +171,7 @@ export const searchStyles = createStyleSheet(({ device, colors, border }) => ({
         height: 48,
     },
     offerContainer: {
-        padding: 15,
-        paddingBottom: Platform.OS == 'ios' ? 25 : 15,
-        paddingHorizontal: 20,
+
         overflow: 'hidden'
     },
     offerContent: {

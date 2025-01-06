@@ -47,8 +47,12 @@ export const cartSlice = createSlice({
         ) => {
             const { restaurant, item } = action.payload;
             const existingRestaurantCart = state.carts.find(
-                cart => cart.restaurant.id === restaurant.id,
+                cart => cart.restaurant?.id === restaurant.id, // Use optional chaining
             );
+
+            if (!existingRestaurantCart) {
+                console.warn("Restaurant cart not found for restaurant:", restaurant);
+            }
 
             if (existingRestaurantCart) {
                 const existingItem = existingRestaurantCart?.items?.find(
@@ -80,10 +84,14 @@ export const cartSlice = createSlice({
             }>,
         ) => {
             const { itemId, restaurant_id } = action?.payload;
-            const restaurantCart = state?.carts?.find(
-                cart => cart?.restaurant?.id === restaurant_id,
+            const restaurantCart = state.carts.find(
+                cart => cart.restaurant?.id === restaurant_id, // Use optional chaining
             );
-            if (!restaurantCart) return;
+
+            if (!restaurantCart) {
+                console.warn(`Restaurant cart not found for id: ${restaurant_id}`);
+                return;
+            }
             const itemIndex = restaurantCart.items?.findIndex(
                 item => item?.id === itemId,
             );
@@ -208,13 +216,21 @@ export const cartSlice = createSlice({
         ) => {
 
             const { restaurant_id, itemId, customizationId } = action.payload
-            const restaurantCart = state?.carts?.find((cart) => cart?.restaurant?.id === restaurant_id)
+            const restaurantCart = state?.carts?.find(
+                cart => cart?.restaurant?.id === restaurant_id,
+            );
 
-            if (!restaurantCart) return
+            if (!restaurantCart) {
+                console.warn(`Restaurant cart not found for id: ${restaurant_id}`);
+                return;
+            }
 
-            const item = restaurantCart?.items?.find(cartItem => cartItem?.id === itemId)
+            const item = restaurantCart.items.find(cartItem => cartItem?.id === itemId);
 
-            if (!item) return
+            if (!item) {
+                console.warn(`Item not found for id: ${itemId}`);
+                return;
+            }
 
             const customizationIndex = item?.customizations?.findIndex((cust) => cust?.id === customizationId) as number
 
@@ -326,7 +342,7 @@ export const selectRestaurantCartItem = (
 ) =>
     createSelector(
         (state: RootState) =>
-            state.cart.carts.find(cart => cart.restaurant.id === restaurantId)?.items,
+            state.cart.carts.find(cart => cart.restaurant?.id === restaurantId)?.items,
         items => items?.find(item => item?.id === itemId) || null,
     );
 export default cartSlice.reducer;

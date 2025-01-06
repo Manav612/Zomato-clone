@@ -1,5 +1,5 @@
-import {View, Text, ViewStyle, Animated, TouchableOpacity} from 'react-native';
-import React, {FC} from 'react';
+import { View, Text, ViewStyle, Animated, TouchableOpacity } from 'react-native';
+import React, { FC } from 'react';
 
 interface ScalePressProps {
   onPress?: () => void;
@@ -35,9 +35,9 @@ const ScalePress: FC<ScalePressProps> = ({
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onLongPress={onLongPress}
-      style={{...style}}
+      style={{ ...style }}
       activeOpacity={1}>
-      <Animated.View style={{transform: [{scale: scaleValue}], width: '100%'}}>
+      <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
         {children}
       </Animated.View>
     </TouchableOpacity>

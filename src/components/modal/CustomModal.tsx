@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         backgroundColor: 'rgba(0,0,0,0.5)',
-        filter: Platform.OS === 'android' ? [{ blur: 4 }] : undefined,
         justifyContent: 'flex-end',
     },
     contentContainer: {

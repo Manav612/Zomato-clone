@@ -6,15 +6,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {useAppSelector} from '@states/reduxHook';
-import {useSharedState} from './SharedContext';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useStyles} from 'react-native-unistyles';
-import {tabStyles} from '@unistyles/tabStyles';
-import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {Colors, screenWidth} from '@unistyles/Constants';
+import React, { FC } from 'react';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useAppSelector } from '@states/reduxHook';
+import { useSharedState } from './SharedContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useStyles } from 'react-native-unistyles';
+import { tabStyles } from '@unistyles/tabStyles';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { Colors, screenWidth } from '@unistyles/Constants';
 import ScalePress from '@components/ui/ScalePress';
 import {
   DeliveryTabIcon,
@@ -22,15 +22,18 @@ import {
   LiveTabIcon,
   ReorderTabIcon,
 } from './TabIcon';
+import HOCcart from '@features/checkout/HOCcart';
+
+
 
 const CustomTabBar: FC<BottomTabBarProps> = props => {
   const isVegMode = useAppSelector(state => state.user.isVegMode);
-  const {scrollY} = useSharedState();
+  const { scrollY } = useSharedState();
 
-  const {state, navigation} = props;
+  const { state, navigation } = props;
   const bottom = useSafeAreaInsets();
 
-  const {styles} = useStyles(tabStyles);
+  const { styles } = useStyles(tabStyles);
 
   const isLiveTabFocused = state.routes[state.index]?.name === 'Live';
 
@@ -40,8 +43,8 @@ const CustomTabBar: FC<BottomTabBarProps> = props => {
         {
           translateY:
             scrollY.value === 1
-              ? withTiming(100, {duration: 300})
-              : withTiming(0, {duration: 300}),
+              ? withTiming(100, { duration: 300 })
+              : withTiming(0, { duration: 300 }),
         },
       ],
     };
@@ -57,6 +60,7 @@ const CustomTabBar: FC<BottomTabBarProps> = props => {
 
   return (
     <>
+      {!isLiveTabFocused && <HOCcart />}
       <Animated.View
         style={[
           styles.tabBarContainer,
@@ -89,6 +93,7 @@ const CustomTabBar: FC<BottomTabBarProps> = props => {
             };
 
             return (
+
               <ScalePress
                 onPress={onPress}
                 onLongPress={onLongPress}
@@ -120,8 +125,8 @@ const CustomTabBar: FC<BottomTabBarProps> = props => {
               backgroundColor: isLiveTabFocused
                 ? '#fff'
                 : isVegMode
-                ? Colors.active
-                : Colors.primary,
+                  ? Colors.active
+                  : Colors.primary,
             },
           ]}
         />
